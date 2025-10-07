@@ -3,6 +3,8 @@
 import { useState } from 'react';
 
 export default function NewItem() {
+    const [name, setName] = useState("");
+    const [produce, setProduce] = useState("Produce");    
     const [quantity, setQuantity] = useState(1);
 
     const increment = () => {
