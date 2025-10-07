@@ -77,6 +77,7 @@ export default function NewItem() {
                 <label className="block text-white text-lg mb-2">Quantity:</label>
                 <div className="flex items-center space-x-3">
                     <button
+                        type = "button"
                         onClick={decrement}
                         disabled={quantity <= 1}
                         className="w-10 h-10 flex items-center justify-center bg-gray-800 text-white text-xl rounded-lg disabled:opacity-50 hover:bg-gray-700 transition-colors"
@@ -85,6 +86,7 @@ export default function NewItem() {
                     </button>
                     <span className="w-12 text-center text-xl text-white">{quantity}</span>
                     <button
+                        type = "button"
                         onClick={increment}
                         disabled={quantity >= 20}
                         className="w-10 h-10 flex items-center justify-center bg-blue-600 text-white text-xl rounded-lg disabled:opacity-50 hover:bg-blue-500 transition-colors"
