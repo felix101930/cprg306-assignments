@@ -38,7 +38,41 @@ export default function NewItem() {
     };
 
     return (
-        <div className="bg-black p-6 rounded-lg max-w-md mx-auto">
+        <form onSubmit={handleSubmit} className="bg-black p-6 rounded-lg max-w-md mx-auto">
+            <div className="mb-4">
+                <label className="block text-white text-lg mb-2">Name:</label>
+                <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    className="w-full p-2 text-lg bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Item name"
+                />
+            </div>
+
+            <div className="mb-4">
+                <label className="block text-white text-lg mb-2">Category:</label>
+                <select
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    required
+                    className="w-full p-2 text-lg bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                    <option value="produce">Produce</option>
+                    <option value="dairy">Dairy</option>
+                    <option value="bakery">Bakery</option>
+                    <option value="meat">Meat</option>
+                    <option value="frozen">Frozen Foods</option>
+                    <option value="canned">Canned Goods</option>
+                    <option value="dry">Dry Goods</option>
+                    <option value="beverages">Beverages</option>
+                    <option value="snacks">Snacks</option>
+                    <option value="household">Household</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
             <div className="mb-4">
                 <label className="block text-white text-lg mb-2">Quantity:</label>
                 <div className="flex items-center space-x-3">
@@ -62,6 +96,13 @@ export default function NewItem() {
                     Allowed range: 1-20
                 </p>
             </div>
-        </div>
+
+            <button
+                type="submit"
+                className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-500 transition-colors text-lg font-semibold"
+            >
+                Add Item
+            </button>
+        </form>
     );
 }
