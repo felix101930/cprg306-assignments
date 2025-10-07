@@ -4,8 +4,26 @@ import { useState } from 'react';
 
 export default function NewItem() {
     const [name, setName] = useState("");
-    const [produce, setProduce] = useState("Produce");    
+    const [category, setCategory] = useState("produce");    
     const [quantity, setQuantity] = useState(1);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        
+        const item = {
+            name: name,
+            quantity: quantity,
+            category: category,
+        };
+        
+        console.log(item);
+        alert(`Name: ${name}\nQuantity: ${quantity}\nCategory: ${category}`);
+        
+        // Reset form
+        setName("");
+        setQuantity(1);
+        setCategory("produce");
+    };
 
     const increment = () => {
         if (quantity < 20) {
