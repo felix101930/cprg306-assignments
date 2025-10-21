@@ -16,9 +16,7 @@ export default function NewItem() {
             category: category,
         };
         
-        console.log(item);
-        alert(`Name: ${name}\nQuantity: ${quantity}\nCategory: ${category}`);
-        
+        onAdditem(item);
         // Reset form
         setName("");
         setQuantity(1);
