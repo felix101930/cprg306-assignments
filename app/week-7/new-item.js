@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export default function NewItem() {
+export default function NewItem({ onAddItem }) {
     const [name, setName] = useState("");
     const [category, setCategory] = useState("produce");    
     const [quantity, setQuantity] = useState(1);
@@ -11,13 +11,15 @@ export default function NewItem() {
         e.preventDefault();
         
         const item = {
+            id: Math.random().toString(36).substring(2, 9), // id is a random string
             name: name,
             quantity: quantity,
             category: category,
         };
         
-        onAdditem(item);
-        // Reset form
+        onAddItem(item);
+        
+        // Reset form after submission
         setName("");
         setQuantity(1);
         setCategory("produce");
