@@ -19,10 +19,45 @@ export default function MealIdeas({ ingredient }) {
     // State to store the list of meal ideas
     const [meals, setMeals] = useState([]);
 
+    // Function to load meal ideas
+    const loadMealIdeas = async () => {
+        if (ingredient) {
+            const mealIdeas = await fetchMealIdeas(ingredient);
+            setMeals(mealIdeas);
+        } else {
+            setMeals([]);
+        }
+    };
+
+    // Effect hook to load meals when ingredient changes
+    useEffect(() => {
+        loadMealIdeas();
+    }, [ingredient]);
+
     return (
         <div>
-            <h2 className="text-xl font-bold mb-4">Meal Ideas</h2>
-            {/* We'll add the meal list rendering here later */}
+            <h2 className="text-xl font-bold mb-4">
+                Meal Ideas for {ingredient || "..."}
+            </h2>
+            
+            <div>
+                {!ingredient ? (
+                    <p>Select an item to see meal ideas</p>
+                ) : meals.length === 0 ? (
+                    <p>No meal ideas found for {ingredient}</p>
+                ) : (
+                    <ul className="space-y-4">
+                        {meals.map((meal) => (
+                            <li 
+                                key={meal.idMeal}
+                                className="bg-black p-4 rounded-xl border border-gray-800"
+                            >
+                                {meal.strMeal}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
         </div>
     );
 }
