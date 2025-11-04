@@ -30,12 +30,16 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# environment variables
+.env
+.env.*
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+.env.development
+.env.test
+.env.production
 
 # vercel
 .vercel
@@ -51,6 +55,9 @@ firebase-debug.log
 firebase-debug.*.log
 firebase.json
 .firebase/
+**/firebase-config.*
+**/firebase-credentials.*
+**/serviceAccountKey.json
 
 # IDE and editor files
 .idea/
@@ -62,3 +69,13 @@ firebase.json
 # Local config files
 config.local.js
 **/config/local.js
+temp.md  # Temporary files with sensitive information
+
+# Build output
+dist/
+build/
+out/
+
+# Logs
+logs
+*.log
