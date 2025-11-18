@@ -1,27 +1,49 @@
 'use client'; 
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ItemList from './item-list';
 import NewItem from './new-item';
 import MealIdeas from './meal-ideas';
-import itemsData from './items.json';
 import { useUserAuth } from '../../contexts/AuthContext';
+import { getItems, addItem } from '../_services/shopping-list-service';
 import Link from 'next/link';
 
 export default function Page() {
-    // Get user from the auth context
     const { user } = useUserAuth();
     
-    // Initialize states
-    const [items, setItems] = useState(itemsData);
+    // Initialize items as an empty array (no json data)
+    const [items, setItems] = useState([]);
     const [selectedItemName, setSelectedItemName] = useState("");
 
+    // Function to load items from Firestore
+    async function loadItems() {
+        if (user) {
+            const dbItems = await getItems(user.uid);
+            setItems(dbItems);
+        }
+    }
+
+    // UseEffect to load items when component mounts or user changes
+    useEffect(() => {
+        loadItems();
+    }, [user]);
+
     // Event handler for adding new items
-    const handleAddItem = (newItem) => {
-        setItems([...items, newItem]);
+    const handleAddItem = async (newItem) => {
+        if (user) {
+            // 1. Create the item object without the fake ID from NewItem component
+            // We strip the 'id' field because Firestore creates its own unique ID
+            const { id, ...itemData } = newItem; 
+            
+            // 2. Call Firestore to add item
+            const docId = await addItem(user.uid, itemData);
+            
+            // 3. Update local state with the real ID from Firestore so it appears instantly
+            const newItemWithId = { ...itemData, id: docId };
+            setItems([...items, newItemWithId]);
+        }
     };
 
-    // Event handler for selecting an item
     const handleItemSelect = (itemName) => {
         // Clean up the item name
         const cleanName = itemName
@@ -32,20 +54,18 @@ export default function Page() {
         setSelectedItemName(cleanName);
     };
 
-    // If the user is not logged in, prevent rendering the page
     if (!user) {
         return (
             <main className="p-4">
                 <h1 className="text-3xl font-bold mb-4">Access Denied</h1>
                 <p>You must be logged in to view this page.</p>
-                <Link href="/week-9" className="text-blue-400 hover:underline mt-4 inline-block">
+                <Link href="/week-10" className="text-blue-400 hover:underline mt-4 inline-block">
                     Return to Landing Page
                 </Link>
             </main>
         );
     }
 
-    // If the user is logged in, render the shopping list
     return (
         <main className="p-4">
             <h1 className="text-3xl font-bold mb-4">Shopping List</h1>
